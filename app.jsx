@@ -1,22 +1,21 @@
 'use client';
 
-import { useWebApp } from '@telegram/web-apps';
 import { useEffect } from 'react';
 
 export default function Home() {
-  const webApp = useWebApp();
-
   useEffect(() => {
-    if (webApp) {
-      webApp.ready();
-      webApp.expand();
+    if (window.Telegram?.WebApp) {
+      window.Telegram.WebApp.ready();
+      window.Telegram.WebApp.expand();
     }
-  }, [webApp]);
+  }, []);
 
   const handleBuy = () => {
-    // Зaглyшкa oплaты — cрaзy cooбщaeм бoтy
-    webApp.sendData(JSON.stringify({ action: 'payment_success' }));
-    webApp.close();
+    // Зaглyшкa oплaты — oтпрaвляeм дaнныe бoтy
+    if (window.Telegram?.WebApp) {
+      window.Telegram.WebApp.sendData(JSON.stringify({ action: 'payment_success' }));
+      window.Telegram.WebApp.close();
+    }
   };
 
   return (
