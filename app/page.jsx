@@ -11,11 +11,13 @@ export default function Home() {
   }, []);
 
   const handleBuy = () => {
-    // Зaглyшкa oплaты — oтпрaвляeм дaнныe бoтy
-    if (window.Telegram?.WebApp) {
-      window.Telegram.WebApp.sendData(JSON.stringify({ action: 'payment_success' }));
-      window.Telegram.WebApp.close();
-    }
+    const userId = window.Telegram.WebApp.initDataUnsafe.user?.id || 'unknown';
+    const receiver = '4100119357126825';
+    const amount = 999;
+    const label = `user_${userId}`;
+    const quickpayUrl = `https://yoomoney.ru/quickpay/confirm?receiver=${receiver}&quickpay-form=shop&targets=Секретная+инструкция+по+фроду+на+Ozon&paymentType=SB&sum=${amount}&label=${label}&successURL=https://ofjbot.ru/thanks`;
+
+    window.location.href = quickpayUrl;
   };
 
   return (
